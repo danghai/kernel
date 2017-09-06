@@ -29,4 +29,39 @@ Every kernel module needs to include `linux/module.h`. We need to include `linux
 
 ### 2. Introducing printk()
 
-Despite what you might think, `printk()` was not meant to communicate information to the user, even though we used it for exactly this purpose in hello-1. It happens to be a logging mechanism for the kernel, and is used to log information or give warnings. Therefore, each `printk()` statement comes with a priority, which is the <1> and `KERN_ALERT`. There are 8 priorities and the kernel has macros for them, so you do not have to use cryptic numbers, and you can view them (and their meanings) in `linux/kernel.h`. If you do not specify a priority level, the default priority, `DEFAULT_MESSAGE_LOGLEVEL`, will be used
+Despite what you might think, `printk()` was not meant to communicate information to the user, even though we used it for exactly this purpose in hello-1. It happens to be a logging mechanism for the kernel, and is used to log information or give warnings. Therefore, each `printk()` statement comes with a priority, which is the <1> and `KERN_ALERT`. There are 8 priorities and the kernel has macros for them, so you do not have to use cryptic numbers, and you can view them (and their meanings) in `linux/kernel.h`. If you do not specify a priority level, the default priority, `DEFAULT_MESSAGE_LOGLEVEL`, will be used.
+
+### 3. Compiling Kernel Modules
+
+Kernel modules need to be compiled a bit differently from regular userspace apps. Former kernel versions required us to care much about these  setting, which are usually stored in [Makefiles](https://github.com/danghai/Kernel/blob/master/hello_kernel/Makefile). Although hierarchically organized, many redundant setting accumulated in sublevel Makefiles and made them large and rather difficult to maintain. Fortunately, there is a new way of doing these things, called kbuild, and the build process for external loadable modules is now fully integrated into the standard kernel build mechanism. To learn more on how to compile modules, see file [https://www.kernel.org/doc/Documentation/kbuild/modules.txt](https://www.kernel.org/doc/Documentation/kbuild/modules.txt). Additional details about `Makefile` for kernel modules are available in [linux/Documentation/kbuild/makefiles.tx](linux/Documentation/kbuild/makefiles.tx).
+
+You can compile the module by issuing the command `make`. And then, you can insert your compiled module it into the kernel with `insmod` command. To see the log message, we can use the command `dmesg`. (Note: you must use root privileges to insmod module kernel). In order to remote module from kernel, you can use `rmmod` command. It should be
+
+```
+danghai@ubuntu:~/Kernel/hello_kernel$ make
+make -C /lib/modules/4.4.0-45-generic/build M=/home/danghai/Kernel/hello_kernel modules
+make[1]: Entering directory '/usr/src/linux-headers-4.4.0-45-generic'
+  CC [M]  /home/danghai/Kernel/hello_kernel/hello-1.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC      /home/danghai/Kernel/hello_kernel/hello-1.mod.o
+  LD [M]  /home/danghai/Kernel/hello_kernel/hello-1.ko
+make[1]: Leaving directory '/usr/src/linux-headers-4.4.0-45-generic'
+
+danghai@ubuntu:~/Kernel/hello_kernel$ sudo insmod hello-1.ko
+danghai@ubuntu:~/Kernel/hello_kernel$ sudo rmmod hello-1.ko
+```
+
+5 tail line in `dmesg`: 
+
+```
+[10708.132821] hello_1: module license 'GPL/BSD' taints kernel.
+[10708.132823] Disabling lock debugging due to kernel taint
+[10708.133280] hello_1: module verification failed: signature and/or required key missing - tainting kernel
+[10708.139078] Hello kernel...
+[10913.125658] Goodbye kernel!
+```
+
+
+
+
