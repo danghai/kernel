@@ -33,7 +33,7 @@ Despite what you might think, `printk()` was not meant to communicate informatio
 
 ### 3. Compiling Kernel Modules
 
-Kernel modules need to be compiled a bit differently from regular userspace apps. Former kernel versions required us to care much about these  setting, which are usually stored in [Makefiles](https://github.com/danghai/Kernel/blob/master/hello_kernel/Makefile). Although hierarchically organized, many redundant setting accumulated in sublevel Makefiles and made them large and rather difficult to maintain. Fortunately, there is a new way of doing these things, called kbuild, and the build process for external loadable modules is now fully integrated into the standard kernel build mechanism. To learn more on how to compile modules, see file [https://www.kernel.org/doc/Documentation/kbuild/modules.txt](https://www.kernel.org/doc/Documentation/kbuild/modules.txt). Additional details about `Makefile` for kernel modules are available in [linux/Documentation/kbuild/makefiles.tx](linux/Documentation/kbuild/makefiles.tx).
+Kernel modules need to be compiled a bit differently from regular userspace apps. Former kernel versions required us to care much about these  setting, which are usually stored in [Makefiles](https://github.com/danghai/Kernel/blob/master/hello_kernel/Makefile). Although hierarchically organized, many redundant setting accumulated in sublevel Makefiles and made them large and rather difficult to maintain. Fortunately, there is a new way of doing these things, called kbuild, and the build process for external loadable modules is now fully integrated into the standard kernel build mechanism. To learn more on how to compile modules, see file [https://www.kernel.org/doc/Documentation/kbuild/modules.txt](https://www.kernel.org/doc/Documentation/kbuild/modules.txt). Additional details about `Makefile` for kernel modules are available in [linux/Documentation/kbuild/makefiles.txt](linux/Documentation/kbuild/makefiles.txt).
 
 You can compile the module by issuing the command `make`. And then, you can insert your compiled module it into the kernel with `insmod` command. To see the log message, we can use the command `dmesg`. (Note: you must use root privileges to insmod module kernel). In order to remote module from kernel, you can use `rmmod` command. It should be
 
@@ -52,7 +52,7 @@ danghai@ubuntu:~/Kernel/hello_kernel$ sudo insmod hello-1.ko
 danghai@ubuntu:~/Kernel/hello_kernel$ sudo rmmod hello-1.ko
 ```
 
-5 tail line in `dmesg`: 
+5 tail lines in `dmesg`: 
 
 ```
 [10708.132821] hello_1: module license 'GPL/BSD' taints kernel.
@@ -62,6 +62,13 @@ danghai@ubuntu:~/Kernel/hello_kernel$ sudo rmmod hello-1.ko
 [10913.125658] Goodbye kernel!
 ```
 
+### 4. The __init and __exit Macros
+
+The module initialization function registers any facility offered by the module.
+Initialization functions should be declared `static`, since they are not meant
+to be visible outside the specific file. The __init token in the definition may look a little strange; it is a hint to the kernel that the given function is used only at initialization time. The module loader drops the initialization function after the module is loaded, makin gits memory available for other uses. The use of `module_init` is mandatory. This macro adds a special section to the module's object code starting where the module's initialization function is to be found. Without this definition, your initialization function is never called.
+
+The cleanup function has no value to return, so it is declared void. The __exit modifier marks the code as being for module unload only (by causing the compiler to place it in a special ELF section). If your module is build directly into the kernel or if your kernel is configured to disallow the unloading of modules, functions marked __exit are simply discarded. If your module does not define a cleanup function, the kernel does not allow it to be unloaded.
 
 
 
