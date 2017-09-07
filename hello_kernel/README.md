@@ -70,5 +70,25 @@ to be visible outside the specific file. The __init token in the definition may 
 
 The cleanup function has no value to return, so it is declared void. The __exit modifier marks the code as being for module unload only (by causing the compiler to place it in a special ELF section). If your module is build directly into the kernel or if your kernel is configured to disallow the unloading of modules, functions marked __exit are simply discarded. If your module does not define a cleanup function, the kernel does not allow it to be unloaded.
 
+### 5. [hello-2.c](https://github.com/danghai/kernel/blob/master/hello_kernel/hello-2.c) Passing Command Line Arguments to a Module
+
+Modules can take command line arguments, but not with the `argc/argv`. To allow arguments to be passed to your module, declare the variables that will take the values of the command line arguments as global and then use the `module_param()` macro (defined in linux/moduleparam.h) to set the mechanism up. At runtime, insmod will fill the variables with any command line arguments that are given, (Ex: insmod hello-2.ko my_variable=7). The variable declarations and macros should be placed at the beginning of the module for clarity. 
+
+The `module_param()` macro takes 3 arguments: the name of the variable, its type and permission for the corresponding file in sysfs. If you would like to use arrays of integers of string you need to use `module_param_array()` and `module_param_string()` (in module_param_array has 4 argument, the fourth argument is a pointer to the variable that will store the number of elements of the array initialized by the user at module loading time). Example run: 
+
+```
+danghai@ubuntu:~/Kernel/hello_kernel$ sudo insmod hello-2.ko my_int=7 my_string="Trammie_Le_Duong" my_int_array=-1
+danghai@ubuntu:~/Kernel/hello_kernel$ dmesg
+[48914.179089] Hello Kernel ! 
+[48914.179092] My int is : 7 
+[48914.179093] My string is: Trammie_Le_Duong 
+[48914.179093] my_int_array[0] = -1 
+[48914.179094] my_int_array[1] = 1 
+```
+
+
+
+
+
 
 
