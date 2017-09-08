@@ -2,6 +2,7 @@
 
 ### 1. [Hello Kernel](https://github.com/danghai/Kernel/tree/master/hello_kernel)
 
+### 2. [Character_device_driver](https://github.com/danghai/Kernel/tree/master/character_device_driver)
 
 ### Reference:
 
