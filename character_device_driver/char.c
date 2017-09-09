@@ -117,10 +117,6 @@ static ssize_t device_write(struct file *filp, const char __user *buff, size_t c
     return ret;
 }
 
-
-
-
-
 static int __init char_dev_init (void)
 {
     printk(KERN_INFO "Module loading and initial setup character driver .... \n");

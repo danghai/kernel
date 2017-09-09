@@ -22,7 +22,7 @@ There are two numbers (separated by a comma). These numbers are the major and mi
 
 * `Minor number: ` is used by the kernel to determine exactly which device is being referred to. Depending on how your driver is written, you can either get a direct pointer to your device from the kernel, or you can use the minor number yourself as an index into a local array of devices. To obtain the minor use: `MINOR (dev)`
 
-If, instead, you have the major and minor numbers and need to turn them into a dev use:
+Within the kernel, the `dev_t` type is used to hold device numbers( Major and Minor parts).If, instead, you have the major and minor numbers and need to turn them into a dev use:
 `MKDEV (int major, int minor)`
 
 ### 2. The file_operations Structure
@@ -63,5 +63,27 @@ static struct file_operations fops = {
 ```
 
 ### 3. Registering A Device
+
+One of the first things your driver will need to do when setting up a char device is to obtain one or more device numbers to work with. The necessary function for this task is `register_chrdev_region` 
+
+```c
+	int register_chrdev_region(dev_t first, unsigned int count, char *name);
+```
+
+`register_chrdev_region` works well if you know ahead of time exactly which device numbers you want. Often, however, you will not know which major numbers your device will use. The Kernel can allocate a mjor number by using a different function: 
+
+```c
+	int alloc_chrdev_region(dev_t *dev, unsigned int firstminor,unsigned int count, char *name);
+```
+
+Regardless of how you allocate your device numbers, you should free them when they are no longer in use. Device numbers are freed with: 
+
+```c
+	void unregister_chrdev_region(dev_t first, unsigned int count); 
+```
+
+The usual place to call register would be in your init module's, and the usual place to call unregister would be in your module's cleanup function.
+
+
 
 
