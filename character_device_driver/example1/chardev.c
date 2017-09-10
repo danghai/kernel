@@ -57,7 +57,7 @@ static int device_open(struct inode *inode, struct file *file)
         return -EBUSY;
 
     Device_Open++;
-    sprintf(msg, "I already told you %d times Hello world! \n",counter++);
+    sprintf(msg, "I already told you %d times /dev/chardev file! \n",counter++);
     msg_Ptr = msg;
     try_module_get(THIS_MODULE);
 
@@ -109,7 +109,7 @@ static ssize_t device_read (struct file *filp, char *buffer, size_t length, loff
     }
 
     /* Read functions return the number of bytes put into the buffer */
-    return bytes_read; 
+    return bytes_read;
 }
 
 /*

@@ -1,1 +1,0 @@
-cmd_/home/danghai/Kernel/character_device_driver/example1/chardev.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/danghai/Kernel/character_device_driver/example1/chardev.ko /home/danghai/Kernel/character_device_driver/example1/chardev.o /home/danghai/Kernel/character_device_driver/example1/chardev.mod.o
