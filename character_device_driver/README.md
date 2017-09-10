@@ -84,6 +84,33 @@ Regardless of how you allocate your device numbers, you should free them when th
 
 The usual place to call register would be in your init module's, and the usual place to call unregister would be in your module's cleanup function.
 
+### 4. Char Device Registration
 
+As we mentioned, the kernel uses structures of type struct `cdev` to represent char devices internally. Before the kernel invokes your device's operations, you must allocate and register one or more of these structure. You want to embed the `cdev` structure within a device-specific structure of your own. You should initialize the structure that you have already allocated with:
 
+```c
+	void cdev_init(struct cdev *cdev, struct file_operation *fops);
+```
+
+Once the `cdev` structure is set up, the final step is to tell the kernel about it with a call to:
+
+```c
+	int cdev_add(struct cdev *dev, dev_t num, unsigned int count);
+```
+
+To remove a char device from the system call:
+
+```c
+	void cdev_del(struct cdev *dev);
+```
+
+### 5. [Example Character Device Driver](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1.md)
+
+The code sample creates a char driver and instruction how to run the code. This code open charater device driver and read information about current value of data in `Kernel Space`. In addition, in `User Space`, it can pass argv[1] as a parameter to modify data in Kernel. Specifically, after reading, it will write the updated value data back to the `Kernel Space`. It can read and write data between `Kernel Space` and `User Space`
+
+* [char.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/char.c)
+
+* [user.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/user.c) 
+
+* [README](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1.md)
 
