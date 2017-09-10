@@ -4,7 +4,7 @@
 *   This code opens charater device driver and read information about current value of data in `Kernel Space`.
 *   In addition, in `User Space`, it can pass argv[1] as a parameter to modify data in Kernel.
 *   Specifically, after reading, it will write the updated value data back to the `Kernel Space`.
-*   It can read and write data between `Kernel Space` and `User Space`
+*   it can read and write data between `Kernel Space` and `User Space`
 */
 
 #include <linux/module.h>

@@ -106,7 +106,7 @@ To remove a char device from the system call:
 
 ### 5. [Example Character Device Driver](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1.md)
 
-The code sample creates a char driver and instruction how to run the code. This code open charater device driver and read information about current value of data in `Kernel Space`. In addition, in `User Space`, it can pass argv[1] as a parameter to modify data in Kernel. Specifically, after reading, it will write the updated value data back to the `Kernel Space`. It can read and write data between `Kernel Space` and `User Space`
+The code sample creates a char driver and instruction how to run the code. This code open charater device driver and read information about current value of data in `Kernel Space`. In addition, in `User Space`, it can pass argv[1] as a parameter to modify data in Kernel. Specifically, after reading, it will write the updated value data back to the `Kernel Space`, it can read and write data between `Kernel Space` and `User Space`
 
 * [char.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/char.c)
 
