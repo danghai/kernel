@@ -114,3 +114,13 @@ The code sample creates a char driver and instruction how to run the code. This 
 
 * [README](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1.md)
 
+### Reference: 
+
+[Video simple a character device] (https://www.youtube.com/watch?v=E_xrzGlHbac)
+
+[ A Character Device] (http://derekmolloy.ie/writing-a-linux-kernel-module-part-2-a-character-device/)
+
+[The Linux Kernel Module Programming Guide] (http://www.tldp.org/LDP/lkmpg/2.4/html/x579.html)
+
+
+

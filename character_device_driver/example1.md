@@ -9,7 +9,7 @@ You'll need root on a Linux machine
 ```
 # Build char.ko, the kernel module
 # Build user.c, the user space
-$make
+$ make
 
 # Load the kernel module and Initial data = 7
 $ sudo insmod char.ko data=7
@@ -39,7 +39,7 @@ The log file:
 [128500.328464] Currently, the value of data: 7
 ```
 
-#### 2. You can test the read and write between user space and kernel space
+#### 2. You can test `read` and `write` function between user space and kernel space
 
 ```
 $ sudo ./user 168
