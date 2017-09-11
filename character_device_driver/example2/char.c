@@ -1,10 +1,12 @@
 /*
-*   Name: Hai Dang Hoang
 *   Char.c: The code sample creates a char driver and instruction how to run the code.
 *   This code opens charater device driver and read information about current value of data in `Kernel Space`.
 *   In addition, in `User Space`, it can pass argv[1] as a parameter to modify data in Kernel.
 *   Specifically, after reading, it will write the updated value data back to the `Kernel Space`.
 *   it can read and write data between `Kernel Space` and `User Space`
+*
+*   Reference: PJ Waskiewicz (Portland State University)
+*   Modify: Hai Dang Hoang 
 */
 
 #include <linux/module.h>

@@ -27,4 +27,15 @@ $ cat /dev/chardev
 I already told you 3 times /dev/chardev file! 
 $ cat /dev/chardev
 I already told you 4 times /dev/chardev file! 
+
+$dmesg 
+
+[186308.054216] Module loading and initial setup character driver .... 
+[186308.054222] I was assigned major number 246. To talk to
+[186308.054223] the driver, create a dev file with 
+[186308.054224] 'mknod /dev/chardev c 246 0'.
+[186308.054225] Try various minor numbers. Try to cat and echo to 
+[186308.054226] the device file.
+[186308.054226] Remove the device file and module when done .
+
 ```
