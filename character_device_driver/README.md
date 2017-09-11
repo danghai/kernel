@@ -1,5 +1,11 @@
 # Character Device Files
 
+| # | Title | File |
+| --- | --- | --- |
+| 1 | [Example1](https://github.com/danghai/Kernel/tree/master/character_device_driver/example1) | * [chardev.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1/chardev.c)
+
+* [README](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1/README.md)|
+
 ### 1. Major and Minor Numbers
 
 Char devices are accessed through names in the filesystem. Those names are called special files or device files or simply nodes of the filesystem tree; they are conventionally located in the `/dev` directory. Special files for char drivers are identified by a `"c"` in the first column of the ouput of command `ls -l`
@@ -104,14 +110,14 @@ To remove a char device from the system call:
 	void cdev_del(struct cdev *dev);
 ```
 
-### 5. Example
+### 5. Example Character Device Driver
 #### 1. [Example 1](https://github.com/danghai/Kernel/tree/master/character_device_driver/example1) 
 
 The example code creates a char driver. You can `cat` its device file ( or open the file with a program) and the driver will put the number of times the device file has beeen read from into the file. We simply read in the data and print a message acknowledging that we received it. 
 
 * [chardev.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1/chardev.c)
 
-* [README](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1/example1.md)
+* [README](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1/README.md)
 
 
 #### 2. [Example 2](https://github.com/danghai/Kernel/tree/master/character_device_driver/example2)
@@ -122,7 +128,7 @@ The code sample creates a char driver and instruction how to run the code. This 
 
 * [user.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/example2/user.c) 
 
-* [README](https://github.com/danghai/Kernel/blob/master/character_device_driver/example2/example2.md)
+* [README](https://github.com/danghai/Kernel/blob/master/character_device_driver/example2/README.md)
 
 ### Reference: 
 
