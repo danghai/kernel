@@ -104,15 +104,25 @@ To remove a char device from the system call:
 	void cdev_del(struct cdev *dev);
 ```
 
-### 5. [Example Character Device Driver](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1.md)
+### 5. Example
+#### 1. [Example 1](https://github.com/danghai/Kernel/tree/master/character_device_driver/example1) 
+
+The code sample creates a char driver and instruction how to run the code. This code open charater device driver and read information about current value of data in `Kernel Space`. In addition, in `User Space`, it can pass argv[1] as a parameter to modify data in Kernel. Specifically, after reading, it will write the updated value data back to the `Kernel Space`. It can read and write data between `Kernel Space` and `User Space`
+
+* [chardev.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1/chardev.c)
+
+* [README](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1/example1.md)
+
+
+#### 2. [Example 2](https://github.com/danghai/Kernel/tree/master/character_device_driver/example2)
 
 The code sample creates a char driver and instruction how to run the code. This code open charater device driver and read information about current value of data in `Kernel Space`. In addition, in `User Space`, it can pass argv[1] as a parameter to modify data in Kernel. Specifically, after reading, it will write the updated value data back to the `Kernel Space`, it can read and write data between `Kernel Space` and `User Space`
 
-* [char.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/char.c)
+* [char.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/example2/char.c)
 
-* [user.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/user.c) 
+* [user.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/example2/user.c) 
 
-* [README](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1.md)
+* [README](https://github.com/danghai/Kernel/blob/master/character_device_driver/example2/example2.md)
 
 ### Reference: 
 
