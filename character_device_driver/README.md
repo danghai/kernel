@@ -2,9 +2,8 @@
 
 | # | Title | File |
 | --- | --- | --- |
-| 1 | [Example1](https://github.com/danghai/Kernel/tree/master/character_device_driver/example1) | * [chardev.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1/chardev.c)
-
-* [README](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1/README.md)|
+| 1 | [Example1](https://github.com/danghai/Kernel/tree/master/character_device_driver/example1) | [chardev.c](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1/chardev.c)
+[README](https://github.com/danghai/Kernel/blob/master/character_device_driver/example1/README.md)|
 
 ### 1. Major and Minor Numbers
 
