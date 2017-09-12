@@ -110,7 +110,47 @@ To remove a char device from the system call:
 	void cdev_del(struct cdev *dev);
 ```
 
-### 5. Example Character Device Driver
+Normally, when you do not want to allow something, you return an error code from the function which is supposed to do it. In the
+ __exit module, It is impossible because it's a void function. However, there's a counter which keeps track of how many processes are using your module.
+You can see what it's value is by looking at the 3rd field of `/proc/modules`. You should not use this counter directly,
+but there are functions defined in `linux/module.h` which let you increase, decrease and display this counter. It is 
+important to keep the counter accurate; if you ever do lose track of the correct usage count, you will never be able to
+unload the module. 
+
+```c
+	try_module_get (THIS_MODULE)  	// Increment the use count
+	module_put (THIS_MODULE)	// Decrement the use count.
+``` 
+
+### 5. Read and Write method
+
+The `read` and `write` methods both perform a similar task, that is, copying data from and to application code.
+
+```c
+	ssize_t read (struct file *filp, char __user *buff, size_t count, loff_t *offp);
+	ssize_t write(struct file *filp, const char__user *buff, size_t count, loff_t *offp);
+```
+
+For both methods, `filp` is the file pointer and `count` is the size of the requested data transfer. 
+The `buff` argument points to the user buffer holding the data to be written or the empty buffer where the newly read
+data should be placed. Finally, `offp` is a pointer to a long offset type object that indicates the file position the user
+is accessing.
+
+Obviously, your driver must be able to access the user-space buffer in order to get its job done. This access must always
+be performed by special, kernel-supplied functions, however, in order to be safe. The code for `read` and `write` need to copy a whole segment of
+data to or from the user address space. This capability is offered by the following kernel functions: 
+
+```c
+	unsigned long copy_to_user (void __user *to, const void *from, unsigned long count);
+	unsigned long copy_from_user(void *to, const void __user *from, unsigned long count);
+```
+
+![The arguments to read](http://www.makelinux.net/ldd3/images/0596005903/figs/ldr3_0302.gif)
+
+Both the read and write methods return a negative value if an error occurs. A return value greater than or 
+equal to 0, instead, tells the calling program how many bytes have been successfully transferred. 
+
+### 6. Example Character Device Driver
 #### 1. [Example 1](https://github.com/danghai/Kernel/tree/master/character_device_driver/example1) 
 
 The example code creates a char driver. You can `cat` its device file ( or open the file with a program) and the driver will put the number of times the device file has beeen read from into the file. We simply read in the data and print a message acknowledging that we received it. 
