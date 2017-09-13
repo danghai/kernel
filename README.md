@@ -4,6 +4,8 @@
 
 ### 2. [Character Device Driver](https://github.com/danghai/Kernel/tree/master/character_device_driver)
 
+### 3. [Time Jiffies](https://github.com/danghai/Kernel/tree/master/time_jiffies)
+
 ### Reference:
 
 * [kernelnewbies.org](https://kernelnewbies.org/)
@@ -12,7 +14,9 @@
 
 * [The Linux Kernel](http://www.tldp.org/LDP/tlk/tlk.html)
 
-* [!!! Linux Device Drivers lld3](https://lwn.net/Kernel/LDD3/)
+* [!!! Linux Device Drivers ldd3](https://lwn.net/Kernel/LDD3/)
+
+* [Embedded Linux kernel and driver development](http://makelinux.net/books/embedded_linux_kernel_and_drivers/)
 
 
 
