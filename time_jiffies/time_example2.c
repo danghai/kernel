@@ -2,52 +2,55 @@
 #include <linux/types.h>
 #include <linux/time.h>
 
-/* what's wrong with this? */
-struct timer_list example_timer;
+MODULE_LICENSE("GPL/BSD");
+MODULE_AUTHOR("Hai Dang Hoang");
+MODULE_VERSION("0.1");
+struct timer_list my_timer;
 
-static struct my_local_struct {
-	int foo;
+/*
+*  Struct: factor for call mod_timer, Jiff saves current jiffies
+*/
+static struct my_struct {
+	int factor;
 	unsigned long jiff;
 } my_str;
 
-static void example_timer_cb(unsigned long data)
+static void timer_response(unsigned long data)
 {
-	struct my_local_struct *val = (struct my_local_struct *)data;
+	struct my_struct *val = (struct my_struct *)data;
 
-	printk(KERN_INFO "foo=%u elapsed time = %lu\n",
-		val->foo, (jiffies - val->jiff));
+	printk(KERN_INFO "factor=%u elapsed time = %lu\n",
+		val->factor, (jiffies - val->jiff));
 
-	/* now mess with the data */
-	val->foo++;
+	/* now update with the data */
+	val->factor++;
 	val->jiff = jiffies;
 
 	/* and restart the timer */
-	mod_timer(&example_timer, (jiffies + (val->foo * HZ)));
+	mod_timer(&my_timer, (jiffies + (val->factor * HZ)));
 }
 
 static int __init time_example2_init(void)
 {
 	printk(KERN_INFO "%s started, HZ=%d\n", __func__, HZ);
 
-	my_str.foo = 1;
+	my_str.factor = 1;
 	my_str.jiff = jiffies;
 
-	setup_timer(&example_timer, example_timer_cb, (unsigned long)&my_str);
+	setup_timer(&my_timer, timer_response, (unsigned long)&my_str);
 
-	mod_timer(&example_timer, (jiffies + (1 * HZ)));
+	mod_timer(&my_timer, (jiffies + (1 * HZ)));
 
 	return 0;
 }
 
 static void __exit time_example2_exit(void)
 {
-	del_timer_sync(&example_timer);
+	del_timer_sync(&my_timer);
 	printk(KERN_INFO "unloaded\n");
 }
 
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Hai Dang Hoang");
-MODULE_VERSION("0.1");
+
 
 module_init(time_example2_init);
 module_exit(time_example2_exit);
