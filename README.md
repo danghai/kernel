@@ -6,6 +6,8 @@
 
 ### 3. [Time Jiffies](https://github.com/danghai/Kernel/tree/master/time_jiffies)
 
+### 4. [Tasklet and Workqueue](https://github.com/danghai/Kernel/tree/master/tasklet_workqueue)
+
 ### Reference:
 
 * [kernelnewbies.org](https://kernelnewbies.org/)

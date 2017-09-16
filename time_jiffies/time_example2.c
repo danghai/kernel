@@ -1,3 +1,9 @@
+/*
+*		time_example2.c: provides a simple kernel module that demonstrates the core aspects of the
+* 	simple timer API. Within `init_module`, you initialize a timer with `setup_timer` and then kick it off with a call to `mod_timer`.
+* 	When the timer expires depending on factor, the callback function `timer_response` is invoked. The timer response will be :
+* 	1s --> 2s --> 3s --> 4s ....
+*/
 #include <linux/module.h>
 #include <linux/types.h>
 #include <linux/time.h>
