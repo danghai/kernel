@@ -71,6 +71,7 @@ static int device_release(struct inode *inode, struct file *file)
      never get rid of the module. */
     module_put(THIS_MODULE);
 
+    pr_info("! Data in Kernel = %s \n",buffer);
     return SUCCESS;
 }
 
