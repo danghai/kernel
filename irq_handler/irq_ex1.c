@@ -9,24 +9,14 @@
 #include <linux/interrupt.h>
 #include <asm/io.h>
 
-#define MY_WORK_QUEUE_NAME "WQsched.c"
 
-static struct workqueue_struct *my_workqueue;
-/*
-*  This will get called by the kernel as soon as it's safe
-* to do everything normally allowed by kernel modules
-*/
-
-static void got_char (void *scancode)
-{
-    printk(KERN_INFO "Scan Code %x %s. \n",(int) *((char *)scancode)
-          & 0x7F, *((char *)scancode) & 0x80 ? "Released" : "Pressed");
-}
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Hai Dang Hoang");
 
 /*
 *   This function services keyboard interrupts. It reads the relevant
-*   information from the keyboard and then puts the non time critical
-*   part into the work queue. This will be run when the kernel considers it safe
+*   information from the keyboard and then puts information about Key that pressed
+*   This example only has 3 key: ESC, F1 and F2
 */
 
 irqreturn_t irq_handler(int irq, void *dev_id, struct pt_regs *regs)
@@ -35,39 +25,45 @@ irqreturn_t irq_handler(int irq, void *dev_id, struct pt_regs *regs)
 * This variables are static because they need to be
 * accessible (through pointers) to the bottom half routine.
 */
-static int initialised = 0;
-static unsigned char scancode;
-static struct work_struct task;
-unsigned char status;
+
+  static unsigned char scancode;
+  unsigned char status;
 
 /*
 * Read keyboard status
 */
-status = inb(0x64);
-scancode = inb(0x60);
+  status = inb(0x64);
+  scancode = inb(0x60);
 
-if (initialised == 0)
+switch (scancode)
 {
-    INIT_WORK(&task, got_char);
-    initialised = 1;
+  case 0x01:  printk (KERN_INFO "! You pressed Esc ...\n");
+              break;
+  case 0x3B:  printk (KERN_INFO "! You pressed F1 ...\n");
+              break;
+  case 0x3C:  printk (KERN_INFO "! You pressed F2 ...\n");
+              break;
+  default:
+              break;
 }
-  queue_work(my_workqueue, &task);
+
   return IRQ_HANDLED;
 }
 
 /*
 * Initialize the module - register the IRQ handler
 */
-int init_module()
+static int __init irq_ex_init(void)
 {
-    my_workqueue = create_workqueue(MY_WORK_QUEUE_NAME);
+    /* Free interrupt*/
     free_irq(1,NULL);
-    return request_irq (1, irq_handler,IRQF_SHARED, "test_keyboard_irq_handler",(void *)(irq_handler));
+    return request_irq (1, (irq_handler_t) irq_handler,IRQF_SHARED, "test_keyboard_irq_handler",(void *)(irq_handler));
 }
 
-void cleanup_module()
+static void __exit irq_ex_exit(void)
 {
     free_irq(1,NULL);
 }
 
-MODULE_LICENSE("GPL");
+module_init(irq_ex_init);
+module_exit(irq_ex_exit);
