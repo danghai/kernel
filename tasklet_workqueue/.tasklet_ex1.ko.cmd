@@ -1,1 +1,0 @@
-cmd_/home/danghai/Kernel/tasklet_workqueue/tasklet_ex1.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/danghai/Kernel/tasklet_workqueue/tasklet_ex1.ko /home/danghai/Kernel/tasklet_workqueue/tasklet_ex1.o /home/danghai/Kernel/tasklet_workqueue/tasklet_ex1.mod.o
