@@ -8,6 +8,8 @@
 
 ### 4. [Tasklet and Workqueue](https://github.com/danghai/Kernel/tree/master/tasklet_workqueue)
 
+### 5. [Interrupt handler](https://github.com/danghai/Kernel/tree/master/irq_handler)
+
 ### Reference:
 
 * [kernelnewbies.org](https://kernelnewbies.org/)
