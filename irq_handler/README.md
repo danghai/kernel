@@ -1,6 +1,6 @@
 # Interrupt Handler
 
-### 1.Interrupt
+### 1. Interrupt
 
 * Under Linux, hardware interrupts are call IRQ. There are two types of IRQ's short and long.
 A short IRQ is one which is expected to take a very short period of time, during which the rest
@@ -73,7 +73,7 @@ Note the specific prototype of the handler function: It takes two parameters and
 * The third parameter, `flags`, can be either zero or a bit mask of one or more of the flags. You can see the more description in
 [here](https://www.fsl.cs.sunysb.edu/kernel-api/re667.html)
 
-### Freeing an Interrupt Handler
+### 4. Freeing an Interrupt Handler
 
 When your driver unloads, you need to unregister your interrupt handler and disable the interrupt line by calling:
 
@@ -90,7 +90,7 @@ In either case (shared or unshared), if `dev` is non- `NULL`, it must match the 
 
 ### !!! Example:
 
-#### 1.[irq_ex1.c](https://github.com/danghai/Kernel/blob/master/irq_handler/irq_ex1.c) : Keyboards interrupt
+#### 1. [irq_ex1.c](https://github.com/danghai/Kernel/blob/master/irq_handler/irq_ex1.c) : Keyboards interrupt
 
 This code binds itself to `IRQ` 1, which is the IRQ of the keyboard controlled under Intel architectures. Then,
 when it receives a keyboard interrupt, it reads the keyboard's status and the scan code, which is the value return
