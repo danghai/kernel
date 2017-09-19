@@ -1,9 +1,13 @@
+/*
+*   irq_ex2.c:
+*/
 
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/sched.h>
 #include <linux/workqueue.h>
 #include <linux/interrupt.h>
+#include <linux/slab.h>
 #include <asm/io.h>
 
 MODULE_LICENSE("GPL");
@@ -15,17 +19,43 @@ MODULE_AUTHOR("Hai Dang Hoang");
 #define SCROLL_LED 1
 #define NUM_LED 2
 #define CAPS_LED 4
+#define MY_WORK_QUEUE_NAME "WQ_schedule"
 
 /* Prototype set led on keyboard */
 void set_led(int, int, int);
-struct timer_list my_timer;
 
+/* Global variable */
+unsigned char status_led =0;
+static struct workqueue_struct *my_workqueue;
+typedef struct {
+  struct work_struct my_work;
+  unsigned char keycode;
+} my_work_t;
+
+my_work_t *work;
+
+/*
+*
+*
+*/
+static void got_char(struct work_struct *work)
+{
+    my_work_t *my_work = (my_work_t *)work;
+    if(my_work->keycode == 0x01)
+          printk(KERN_INFO "! You pressed ESC... \n");
+    if(my_work->keycode == 0x3B)
+          printk(KERN_INFO "! You pressed F1... \n");
+
+    printk(KERN_INFO "--> LED on Caps Lock: %s.\n",status_led & CAPS_LED ? "ON" :"OFF");
+    kfree( (void *)work );
+    return;
+}
 /*
 *   Function: set_led: Set status LED on keyboard
 */
 void set_led(int scroll_led, int num_led, int caps_led)
 {
-  unsigned char status_led =0;
+
 //  static unsigned char scancode;
 //  unsigned char status;
   /* Take argument to set status_led */
@@ -44,7 +74,6 @@ void set_led(int scroll_led, int num_led, int caps_led)
   printk(KERN_INFO "Write status_led: %d \ns",status_led);
 }
 
-
 irqreturn_t irq_handler(int irq, void *dev_id)
 {
   /*
@@ -54,6 +83,7 @@ irqreturn_t irq_handler(int irq, void *dev_id)
 
   static unsigned char scancode;
   unsigned char status;
+
 
 /*
 * Read keyboard status
@@ -76,12 +106,21 @@ switch (scancode)
               break;
 }
 
+  work = (my_work_t *) kmalloc(sizeof(my_work_t),GFP_KERNEL);
+  work->keycode = scancode;
+  INIT_WORK((struct work_struct *)work,got_char);
+  queue_work(my_workqueue,(struct work_struct *) work);
+
   return IRQ_HANDLED;
 }
 
 static int __init irq_ex_init (void)
 {
+    printk(KERN_INFO "! Module is load ... \n");
+    my_workqueue = create_workqueue(MY_WORK_QUEUE_NAME);
+    /* Free interrupt keyboard */
     free_irq(1,NULL);
+
     return request_irq(1,(irq_handler_t) irq_handler, IRQF_SHARED,"test_keyboard_irq_handler",(void *)(irq_handler));
 }
 
