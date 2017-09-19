@@ -34,7 +34,7 @@ unsigned char status_led =0;
 static struct workqueue_struct *my_workqueue;
 typedef struct {
   struct work_struct my_work;
-  unsigned char keycode;
+  unsigned char keycode;        /* Save scancode for workqueue */
 } my_work_t;
 
 my_work_t *work;

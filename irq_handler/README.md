@@ -99,7 +99,21 @@ Scancode keyboard you can find this link: [PS/2 Keyboard](http://wiki.osdev.org/
 
 Note: The code is completely Intel specific. If you are not running on an Intel platform, it will not work. The code
 has a bug on `rmmod`. There is no way to restore after `rmmod`. Before `insmod`, do on another terminal `sleep 150 ; reboot`.
-I do not know how to fix it. If you can fix it in, please let me know.   
+I do not know how to fix it. If you can fix it in, please let me know ! 
+
+#### 2. [irq_ex2.c](https://github.com/danghai/Kernel/blob/master/irq_handler/irq_ex2.c) : Keyboards interrupt to turn ON/OFF Caps Lock LED
+
+irq_ex2.c: An interrupt handler example. This code binds itself to `IRQ` 1, which
+is the IRQ of the keyboard controlled under Intel architectures. Then, when it
+receives a keyboard interrupt, it reads the information about status led and keycode
+into the work queue. Pressing:
+
+       * ESC   ---> Caps Lock Led OFF
+
+       * F1,F2 ---> Caps Lock ON
+
+
+
 
 ### Reference:
 
