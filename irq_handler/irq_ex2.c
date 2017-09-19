@@ -1,5 +1,10 @@
 /*
-*   irq_ex2.c:
+*   irq_ex2.c: An interrupt handler example. This code binds itself to `IRQ` 1, which
+*   is the IRQ of the keyboard controlled under Intel architectures. Then, when it
+*   receives a keyboard interrupt, it reads the information about status led and keycode
+*   into the work queue. Pressing:
+*       ESC   ---> Caps Lock Led OFF
+*       F1,F2 ---> Caps Lock ON
 */
 
 #include <linux/kernel.h>
@@ -35,16 +40,16 @@ typedef struct {
 my_work_t *work;
 
 /*
-*
-*
+*  got_char: This function will get called by the kernel as soon as it's safe
+*  to do everything normally allowed by Kernel modules
 */
 static void got_char(struct work_struct *work)
 {
     my_work_t *my_work = (my_work_t *)work;
     if(my_work->keycode == 0x01)
           printk(KERN_INFO "! You pressed ESC... \n");
-    if(my_work->keycode == 0x3B)
-          printk(KERN_INFO "! You pressed F1... \n");
+    if(my_work->keycode == 0x3C)
+          printk(KERN_INFO "! You pressed F2... \n");
 
     printk(KERN_INFO "--> LED on Caps Lock: %s.\n",status_led & CAPS_LED ? "ON" :"OFF");
     kfree( (void *)work );
@@ -56,8 +61,6 @@ static void got_char(struct work_struct *work)
 void set_led(int scroll_led, int num_led, int caps_led)
 {
 
-//  static unsigned char scancode;
-//  unsigned char status;
   /* Take argument to set status_led */
   status_led = (scroll_led) ? (status_led | SCROLL_LED):(status_led & SCROLL_LED);
   status_led = (num_led) ? (status_led | NUM_LED):(status_led & NUM_LED);
@@ -71,19 +74,22 @@ void set_led(int scroll_led, int num_led, int caps_led)
   while((inb(0x64)&2)!=0){}
   /* Send value to LED on keyboard*/
   outb(status_led,0x60);
-  printk(KERN_INFO "Write status_led: %d \ns",status_led);
 }
 
+/*
+*   This function service keyboard interrupts. It reads the relevant
+*   information from the keyboard and then puts the information about
+*   status led and keycode into the work queue. This will be run when
+*   the kernel considers it safe.
+*/
 irqreturn_t irq_handler(int irq, void *dev_id)
 {
   /*
 * This variables are static because they need to be
 * accessible (through pointers) to the bottom half routine.
 */
-
   static unsigned char scancode;
   unsigned char status;
-
 
 /*
 * Read keyboard status
@@ -94,12 +100,15 @@ irqreturn_t irq_handler(int irq, void *dev_id)
 switch (scancode)
 {
   case 0x01:  printk (KERN_INFO "! You pressed Esc ...\n");
+              msecs_to_jiffies(500);
               set_led(0,0,0);
               break;
   case 0x3B:  printk (KERN_INFO "! You pressed F1 ...\n");
+              msecs_to_jiffies(500);
               set_led(1,1,1);
               break;
   case 0x3C:  printk (KERN_INFO "! You pressed F2 ...\n");
+              msecs_to_jiffies(500);
               set_led(0,0,1);
               break;
   default:
