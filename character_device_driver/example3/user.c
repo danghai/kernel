@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         perror("Cannot read information from kernel \n");
         return -1;
       }
-    printf("returned [%s] from the system call, num bytes read: %d\n",buf, (int)num_read);
+    printf("returned [ %s ] from the system call, num bytes read: %d\n",buf, (int)num_read);
 
     /* Write back the new value data to kernel */
     num_written = write(fd, argv[1], num_read);

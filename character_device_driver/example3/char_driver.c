@@ -92,7 +92,7 @@ static ssize_t device_read (struct file *filp, char __user *buff, size_t count, 
 
     nbytes = bytes_to_do - copy_to_user(buff, buffer + *offp, bytes_to_do);
     *offp += nbytes;
-    pr_info("! Data send to user %s, nbytes = %d\n",buffer, nbytes);
+    pr_info("! Data send to user [ %s ], nbytes = %d\n",buffer, nbytes);
     return nbytes;
 }
 
@@ -102,15 +102,30 @@ static ssize_t device_read (struct file *filp, char __user *buff, size_t count, 
 */
 static ssize_t device_write (struct file *filp, const char __user *buff, size_t count, loff_t *offp)
 {
+    /* local kernel memory */
+    char *kern_buf;
+    int nbytes,i;
+
+    if(!buff)
+      return -EINVAL;
+
+    /* Allocate memory in Kernel */
+    kern_buf = kmalloc (count, GFP_KERNEL);
+    if(!kern_buf)
+      return -ENOMEM;
+
     /*
     *   Calculate the number of bytes read
     *   transfer data from user to buffer into kernel
     */
-    int nbytes = count - copy_from_user(buffer + *offp, buff, count);
+    nbytes = count - copy_from_user(kern_buf, buff, count);
     /* Update the offset */
     *offp += nbytes;
+
+    for(i =0 ;i <count;i++)
+      buffer[i]=kern_buf[i];
     /* Display information. pr_info is the same printk with KERN_INFO*/
-    pr_info ("! Received data from user %s, nbytes = %d\n",buffer,nbytes);
+    pr_info ("! Received data from user [ %s ], nbytes = %d\n",buffer,nbytes);
 
     return nbytes;
 }
