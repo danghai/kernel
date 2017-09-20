@@ -1,5 +1,6 @@
 obj-m += time_example1.o
 obj-m += time_example2.o
+obj-m += time_example3.o
 KVERSION = $(shell uname -r)
 
 all:
