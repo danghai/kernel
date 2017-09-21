@@ -75,6 +75,7 @@ static int device_release(struct inode *inode, struct file *file)
     return SUCCESS;
 }
 
+
 /*
 * Called when a process, which already opened the dev file, attempts to read from it
 */
