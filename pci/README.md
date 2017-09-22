@@ -8,7 +8,11 @@ are electrically connected and the way that they should behave. Example PCI Base
 
 ![Example PCI Based System](http://www.tldp.org/LDP/tlk/dd/pci-system.gif)
 
-![PCI image](https://drive.google.com/open?id=0B4e9mzJZ8QqQaVBXd3F6d0dRNXc)
+We discussed [Char device](https://github.com/danghai/Kernel/tree/master/character_device_driver) before and 
+already implemented open(), release(), read(), write(). Now we need to implement PCI Subsystem as well as PCI 
+bus driver. The block diagram shows the idea:  
+
+![PCI image](https://github.com/danghai/Kernel/tree/master/pci/skeleton_pci/pci.jpg)
 
 
 
