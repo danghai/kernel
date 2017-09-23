@@ -32,23 +32,31 @@ Ex: 00:07.3 --> `00`: PCI bus number, `07`: PCI device number , `3`: Function nu
 
 `lspci -x` : display the device configuration 
 
-Each PCI device has a 256 byte address space containing configuration registers:
+Each PCI device has a 256 byte address space containing configuration registers: Ex
 
-* Offset 0: Vendor Id. This 16-bit register identifies a hardware manufacturer. Ex: Vendor number
+```
+02:01.0 Ethernet controller: Intel Corporation 82545EM Gigabit Ethernet Controller (Copper) (rev 01)
+00: 86 80 0f 10 17 01 30 02 01 00 00 02 10 00 00 00
+10: 04 00 5c fd 00 00 00 00 04 00 ff fd 00 00 00 00
+20: 01 20 00 00 00 00 00 00 00 00 00 00 ad 15 50 07
+30: 00 00 00 00 dc 00 00 00 00 00 00 00 07 01 ff 00
+```
+
+* `Offset 0`: Vendor Id. This 16-bit register identifies a hardware manufacturer. Ex: Vendor number
 Intel Device : 0x8086
 
-* Offset 2: Device Id. 16 bit selected by the manufacturer. This ID is usually paired with vendor ID
+* `Offset 2`: Device Id. 16 bit selected by the manufacturer. This ID is usually paired with vendor ID
 to make a unique 32-bit identifier for a hardware device
 
-* Offset 10: Class Id (network, display, bridge ...)
+* `Offset 10`: Class Id (network, display, bridge ...)
 
-* Offsets 16 to 39: Base Address Registers (BAR) 0 to 5
+* `Offsets 16 to 39`: Base Address Registers (BAR) 0 to 5
 
-* Offset 44: Subvendor Id
+* `Offset 44`: Subvendor Id
 
-* Offset 46: Subdevice Id
+* `Offset 46`: Subdevice Id
 
-* Offset 64 and up: up to the device manufacture
+* `Offset 64 and up`: up to the device manufacture
 
 ### 2. Module Device Table
 
