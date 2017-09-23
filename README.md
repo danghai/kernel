@@ -2,13 +2,15 @@
 
 ### 1. [Hello Kernel](https://github.com/danghai/Kernel/tree/master/hello_kernel)
 
-### 2. [Character Device Driver](https://github.com/danghai/Kernel/tree/master/character_device_driver)
+### 2. [Character Device Driver](https://github.com/danghai/Kernel/tree/master/character_device_driver)  !!!
 
 ### 3. [Time Jiffies](https://github.com/danghai/Kernel/tree/master/time_jiffies)
 
 ### 4. [Tasklet and Workqueue](https://github.com/danghai/Kernel/tree/master/tasklet_workqueue)
 
 ### 5. [Interrupt handler](https://github.com/danghai/Kernel/tree/master/irq_handler)
+
+### 6. [PCI Driver](https://github.com/danghai/Kernel/blob/master/pci/skeleton_pci/pci)   !!!
 
 ### Reference:
 

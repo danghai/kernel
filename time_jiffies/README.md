@@ -50,13 +50,11 @@ Let's look at some of these API functions in practice. Listing examples provide 
 simple timer API. Within `init_module`, you initialize a timer with `setup_timer` and then kick it off with a call to `mod_timer`.
 When the timer expires, the callback function `timer_response` is invoked. Finally, the timer deletion (via del_timer) occurs when you remove the module.
 
-1. [Example 1](https://github.com/danghai/Kernel/blob/master/time_jiffies/time_example1.c)
-2. [Example 2](https://github.com/danghai/Kernel/blob/master/time_jiffies/time_example2.c)
-
-3. [Example 3](https://github.com/danghai/Kernel/blob/master/time_jiffies/time_example3.c) : Blink LED Caps Locks with blink rate
-
-provides a simple kernel module that demonstrates the core aspects of the
-simple timer API. It takes parameter to set the blink_rate. The LED on Caps Lock will blink with the blink_rate.
+| # | Title | Desciption |
+| --- | --- | --- |
+| 1 | [Example1](https://github.com/danghai/Kernel/blob/master/time_jiffies/time_example1.c) | Simple timer API, getting response timer from kernel depending on parameter|
+| 2 | [Example1](https://github.com/danghai/Kernel/blob/master/time_jiffies/time_example2.c) | Simple timer API, getting response timer from kernel depending on factor|
+| 3 | [Example1](https://github.com/danghai/Kernel/blob/master/time_jiffies/time_example3.c) | Blink LED Caps Locks with blink rate|
 
 #### How to run:
 
