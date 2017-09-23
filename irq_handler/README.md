@@ -90,6 +90,12 @@ In either case (shared or unshared), if `dev` is non- `NULL`, it must match the 
 
 ### !!! Example:
 
+| # | Title | Desciption |
+| --- | --- | --- |
+| 1 | [irq_ex1](https://github.com/danghai/Kernel/blob/master/irq_handler/irq_ex1.c) | Simple Keyboards interrupt|
+| 2 | [irq_ex2](https://github.com/danghai/Kernel/blob/master/irq_handler/irq_ex2.c) | Keyboards interrupt to turn ON/OFF Caps Lock LED|
+
+
 #### 1. [irq_ex1.c](https://github.com/danghai/Kernel/blob/master/irq_handler/irq_ex1.c) : Keyboards interrupt
 
 This code binds itself to `IRQ` 1, which is the IRQ of the keyboard controlled under Intel architectures. Then,
@@ -110,7 +116,7 @@ into the work queue. Pressing:
 
        * ESC   ---> Caps Lock Led OFF
 
-       * F1,F2 ---> Caps Lock ON
+       * F1,F2 ---> Caps Lock Led ON
 
 
 

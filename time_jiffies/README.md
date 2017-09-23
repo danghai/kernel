@@ -53,8 +53,8 @@ When the timer expires, the callback function `timer_response` is invoked. Final
 | # | Title | Desciption |
 | --- | --- | --- |
 | 1 | [Example1](https://github.com/danghai/Kernel/blob/master/time_jiffies/time_example1.c) | Simple timer API, getting response timer from kernel depending on parameter|
-| 2 | [Example1](https://github.com/danghai/Kernel/blob/master/time_jiffies/time_example2.c) | Simple timer API, getting response timer from kernel depending on factor|
-| 3 | [Example1](https://github.com/danghai/Kernel/blob/master/time_jiffies/time_example3.c) | Blink LED Caps Locks with blink rate|
+| 2 | [Example2](https://github.com/danghai/Kernel/blob/master/time_jiffies/time_example2.c) | Simple timer API, getting response timer from kernel depending on factor|
+| 3 | [Example3](https://github.com/danghai/Kernel/blob/master/time_jiffies/time_example3.c) | Blink LED Caps Locks with blink rate|
 
 #### How to run:
 
