@@ -121,3 +121,6 @@ You can view the [C code Skeleton PCI](https://github.com/danghai/Kernel/blob/ma
 
 * [Basic PCI](http://www.tldp.org/LDP/tlk/tlk.html)
 
+* [Overview of Peripheral Buses](http://www.xml.com/ldd/chapter/book/ch15.html)
+
+
