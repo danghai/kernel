@@ -17,7 +17,7 @@ MODULE_LICENSE("GPL");
 #define VENDOR_ID 0x8086
 #define DEVICE_ID 0x100f
 #define DEVCNT 5
-#define DEVNAME "hw4"
+#define DEVNAME "chardev"
 static u32 led_on = 0x7844E;
 
 static struct mydev_dev {
@@ -125,7 +125,7 @@ static struct pci_driver pe_driver = {
 
 
 
-static int part3_open(struct inode *inode, struct file *file)
+static int char_open(struct inode *inode, struct file *file)
 {
     printk(KERN_INFO "successfully opened!\n");
 
@@ -138,7 +138,7 @@ static int part3_open(struct inode *inode, struct file *file)
     return 0;
 }
 
-static ssize_t part3_read(struct file *file, char __user *buf,
+static ssize_t char_read(struct file *file, char __user *buf,
                              size_t len, loff_t *offset)
 {
     /* Get a local kernel buffer set aside */
@@ -168,7 +168,7 @@ out:
     return ret;
 }
 
-static ssize_t part3_write(struct file *file, const char __user *buf,
+static ssize_t char_write(struct file *file, const char __user *buf,
                               size_t len, loff_t *offset)
 {
     /* Have local kernel memory ready */
@@ -216,21 +216,18 @@ out:
 /* File operations for our device */
 static struct file_operations mydev_fops = {
     .owner = THIS_MODULE,
-    .open = part3_open,
-    .read = part3_read,
-    .write = part3_write,
+    .open = char_open,
+    .read = char_read,
+    .write = char_write,
 };
 
-static int __init hw4_init(void)
+static int __init pci__init(void)
 {
     int ret;
+    printk(KERN_INFO "%s loaded\n", pe_driver.name);
+    ret = pci_register_driver(&pe_driver);
 
-
-
-        printk(KERN_INFO "%s loaded\n", pe_driver.name);
-        ret = pci_register_driver(&pe_driver);
-
-    printk(KERN_INFO "part2 module loading... \n");
+    printk(KERN_INFO "Module loading... \n");
 
     if (alloc_chrdev_region(&mydev.mydev_node, 0, DEVCNT, DEVNAME)) {
         printk(KERN_ERR "alloc_chrdev_region() failed!\n");
@@ -255,7 +252,7 @@ static int __init hw4_init(void)
     return ret;
 }
 
-static void __exit hw4_exit(void)
+static void __exit pci__exit(void)
 {
 
     pci_unregister_driver(&pe_driver);
@@ -267,8 +264,8 @@ static void __exit hw4_exit(void)
     /* clean up the devices */
     unregister_chrdev_region(mydev.mydev_node, DEVCNT);
 
-    printk(KERN_INFO "example5 module unloaded!\n");
+    printk(KERN_INFO "Module unloaded!\n");
 }
 
-module_init(hw4_init);
-module_exit(hw4_exit);
+module_init(pci__init);
+module_exit(pci__exit);
