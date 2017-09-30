@@ -12,6 +12,8 @@ MODULE_LICENSE("GPL");
 #define DEVICE_NAME "pci_test"
 #define VENDOR_ID 0x8086        /* Intel */
 #define DEVICE_ID 0x100F        /* Ethernet Controller */
+#define ADDR_REG_LEDS 0x00E00
+
 
 /* Assuming that our device's configuration header requests 128 bytes on BAR0*/
 #define CONFIGURATION_HEADER_REQUEST 128
@@ -131,14 +133,12 @@ static int pcidevice_probe (struct pci_dev *pdev, const struct pci_device_id *id
       return -ENODEV;
  }
 
-for (i=0; i<16; i++)
-{
-    printk(KERN_INFO "PCI probe: Register 0x%x = 0x%04x \n",i,ioread32(&privdata->regs[i]));
-}
+ printk(KERN_INFO "BAR0 Address of Register = 0x%04x \n",ioread32(&privdata->regs[0]));
 
 /* Enable bus mastering for the device */
 pci_set_master(pdev);
 
+printk(KERN_INFO "Value of LEDCTRL (Offset 0xE00) = 0x%04x \n",ioread32(&privdata->regs[0]+ ADDR_REG_LEDS));
 return SUCCESS;
 }
 
