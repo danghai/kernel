@@ -18,7 +18,7 @@ MODULE_LICENSE("GPL");
 #define DEVICE_ID 0x100f
 #define DEVCNT 5
 #define DEVNAME "chardev"
-static u32 led_on = 0x7844E;
+static u32 led_on = 0x784C2;
 
 static struct mydev_dev {
     struct cdev cdev;
@@ -164,6 +164,7 @@ static ssize_t char_read(struct file *file, char __user *buf,
 
     /* Good to go, so printk the thingy */
     printk(KERN_INFO "led_reg = 0x%06x \n", mydev.syscall_val);
+    printk(KERN_INFO "Addre led= 0x%06x \n", mydev.hw_addr);
 out:
     return ret;
 }
