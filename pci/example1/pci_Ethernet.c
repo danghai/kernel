@@ -1,3 +1,8 @@
+/*
+*   pci_Ethernet.c: A simple PCI device driver. ( The Hardware: 82545EM Gigabit Ethernet)
+*   It can read the information about status register: Link, FD, and Speed.
+*   In addition, it can report the status LED status on Ethernet port.
+*/
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/kernel.h>
@@ -12,14 +17,18 @@ MODULE_LICENSE("GPL");
 #define DEVICE_NAME "pci_test"
 #define VENDOR_ID 0x8086        /* Intel */
 #define DEVICE_ID 0x100F        /* Ethernet Controller */
-#define ADDR_REG_LEDS 0x00E00
-
+#define REG_STATUS 0x0008       /* Status register */
+#define ADDR_REG_LEDS 0x00E00   /* Address LED_CTRL */
 
 /* Assuming that our device's configuration header requests 128 bytes on BAR0*/
 #define CONFIGURATION_HEADER_REQUEST 128
 #define BAR_IO 0
 #define SUCCESS 0
 
+/* Constant varibale value for status register */
+char *link[] = {"DOWN", "UP"};
+char *speed[] = {"10-Mbps", "100-Mbps", "1000-Mbps", "1000-Mbps"};
+char  *duplex[] = {"HALF-DUPLEX", "FULL-DUPLEX"};
 /*
 * This table holds the list of VendorID, DeviceID of PCI driver
 */
@@ -48,6 +57,7 @@ static int pcidevice_probe (struct pci_dev *pdev, const struct pci_device_id *id
     u16 VendorID, DeviceID;
     u8 InterruptLine;
     int i,rc=0;
+    unsigned int status;
 
     privdata = kzalloc(sizeof(*privdata), GFP_KERNEL);
     if(!privdata)
@@ -138,6 +148,12 @@ static int pcidevice_probe (struct pci_dev *pdev, const struct pci_device_id *id
 /* Enable bus mastering for the device */
 pci_set_master(pdev);
 
+/* Dislay the information */
+status = ioread32(&privdata->regs[0]+ REG_STATUS);
+printk(KERN_INFO "\n Intel Corporation 82545EM Gigabit Ethernet Controller: 0x%08x \n",status);
+printk(KERN_INFO "Link: %s \n",link[(status >> 1)&1]);
+printk(KERN_INFO "Speed: %s \n",speed[(status >> 6)&3]);
+printk(KERN_INFO "FD: %s \n", duplex[(status >> 0)&1]);
 printk(KERN_INFO "Value of LEDCTRL (Offset 0xE00) = 0x%04x \n",ioread32(&privdata->regs[0]+ ADDR_REG_LEDS));
 return SUCCESS;
 }
