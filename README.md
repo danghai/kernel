@@ -23,7 +23,7 @@ by typing `make clean`. These topic include:
 To download this repository onto a Linux machine that has git installed, try:
 
 ```
-	git clone git@github.com:danghai/Kernel.git
+	git clone https://github.com/danghai/Kernel.git
 	cd Kernel
 ```
 
