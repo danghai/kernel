@@ -39,7 +39,7 @@ char *link[] = {"DOWN", "UP"};
 char *speed[] = {"10-Mbps", "100-Mbps", "1000-Mbps", "1000-Mbps"};
 char  *duplex[] = {"HALF-DUPLEX", "FULL-DUPLEX"};
 
-static int led_on = 0x706830F;
+static int led_on = 0x0E;
 static int blink_rate =2;
 module_param(blink_rate,int, S_IRUSR | S_IWUSR);
 static struct timer_list blink_timer;
@@ -240,7 +240,7 @@ static ssize_t char_read(struct file *file, char __user *buf,
     *offset += len;
 
     /* Good to go, so printk the thingy */
-    printk(KERN_INFO "led_reg = 0x%06x \n", mydev.syscall_val);
+    //printk(KERN_INFO "led_reg = 0x%06x \n", mydev.syscall_val);
 out:
     return ret;
 }
