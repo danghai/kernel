@@ -119,8 +119,7 @@ that demonstrates the core aspects of the simple PCI
 | # | Title | Desciption |
 | --- | --- | --- |
 | 1 | [Example1](https://github.com/danghai/Kernel/tree/master/pci/example1) | Simple PCI Ethernet driver, It can read information register the hardware 82545EM Gigabit Ethernet|
-| 2 | [Example2](https://github.com/danghai/Kernel/tree/master/pci/example2) | It can read 
-the information, modify and then store back value. Ex: Blink the LED of Ethernet|
+| 2 | [Example2](https://github.com/danghai/Kernel/tree/master/pci/example2) | It can read the information, modify and then store back value. Ex: Blink the LED of Ethernet|
 
 ### Reference: 
 
