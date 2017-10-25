@@ -1,4 +1,8 @@
-# The Linux Kernel Module Programming 
+# 1. Kernel
+ 
+### 1. [How to build and install the latest Linux Kernel](https://github.com/danghai/Kernel/tree/master/install_kernel.md)
+
+# 2. The Linux Kernel Module Programming 
 
 This repository contains a collection of simple C programs that demonstrate different 
 aspects of programming on Linux. The Linux Kernel Module Programming was written for the 4.4 kernels by
@@ -40,6 +44,7 @@ repository, run the following when you are in Kernel directory
 	git fetch -all
 	git reset --hard origin/master
 ```
+
 
 ### Reference:
 
