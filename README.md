@@ -22,6 +22,8 @@ by typing `make clean`. These topic include:
 
 ### 6. [PCI Device Driver](https://github.com/danghai/Kernel/tree/master/pci)   !!!
 
+### 7. [USB Device Driver](https://github.com/danghai/Kernel/tree/master/usb)   !!!
+
 ### Downloading 
 
 To download this repository onto a Linux machine that has git installed, try:
@@ -49,6 +51,8 @@ repository, run the following when you are in Kernel directory
 ### Reference:
 
 * [kernelnewbies.org](https://kernelnewbies.org/)
+
+* [Linux Kernel sphinx](https://kernel.readthedocs.io/en/sphinx-samples/index.html)
 
 * [Linux Kernel Internals (PDF)](http://www.tldp.org/LDP/lki/lki.pdf)
 
