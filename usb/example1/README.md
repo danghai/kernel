@@ -4,7 +4,7 @@ A simple usb device driver. The hardware USB is PNY pen driver (ID 154b:00d4 PNY
 
 ### 1. usbview
 
-A basic listing of all detected USB devices can be obtained using the `lsusb` command with and without the pen drive plugged in. 
+A basic listing of all detected USB devices can be obtained using the `lsusb` command with and without the pen drive plugged in.
 A `-v` option to lsusbprovides detailed information: --> PNY
 ```
 danghai@ubuntu:~$ sudo lsusb
@@ -22,14 +22,14 @@ Bus 002 Device 003: ID 0e0f:0002 VMware, Inc. Virtual USB Hub
 Bus 002 Device 002: ID 0e0f:0003 VMware, Inc. Virtual Mouse
 Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
 ```
-If you use the vmware and do not see the USB hardware connection, you need to set "Show all usb input device" in VM/setting: 
+If you use the vmware and do not see the USB hardware connection, you need to set "Show all usb input device" in VM/setting:
 
-![USB](https://github.com/danghai/Kernel/tree/master/usb/example1/USB.JPG)
+![USB](https://github.com/danghai/Kernel/blob/master/usb/example1/usb.JPG)
 
 
 ### 2. How to run
 
-Before insmod the module, we need to deregister the default usb driver that PNY used. `dmesg` show after connecting it: 
+Before insmod the module, we need to deregister the default usb driver that PNY used. `dmesg` show after connecting it:
 
 ```
 [Oct28 16:00] usb 1-1: new high-speed USB device number 3 using ehci-pci
@@ -74,6 +74,3 @@ The output should be in dmesg:
 [Oct28 16:10] usbcore: deregistering interface driver pen_driver
 [  +0.000013] Pen drive removed 	
 ```
-
-
-
