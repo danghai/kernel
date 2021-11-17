@@ -69,8 +69,8 @@ static int __init irq_ex_init(void)
 
 static void __exit irq_ex_exit(void)
 {
-    printk( KERN_INFO "! Module is unload... \n");
-    free_irq(1,NULL);
+    printk( KERN_INFO "! Module is unloaded... \n");
+    free_irq(1,(void*) irq_handler);
 }
 
 module_init(irq_ex_init);
